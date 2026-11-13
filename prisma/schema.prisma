@@ -1,0 +1,533 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum PlatformRole {
+  USER
+  SUPER_ADMIN
+  TOURNAMENT_MANAGER
+  ANALYST
+  MODERATOR
+}
+enum AccountPrivacy {
+  PUBLIC
+  PRIVATE
+}
+enum TournamentStatus {
+  DRAFT
+  REGISTRATION_OPEN
+  REGISTRATION_CLOSED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+enum RegistrationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  WAITLISTED
+  WITHDRAWN
+}
+enum StageType {
+  QUALIFIER
+  GROUP_STAGE
+  LEAGUE
+  SEMIFINAL
+  GRAND_FINAL
+}
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+enum ResultStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+  SUPERSEDED
+}
+enum ResultSource {
+  MANUAL
+  CSV
+  JSON
+}
+enum PostVisibility {
+  PUBLIC
+  FOLLOWERS
+}
+enum MediaKind {
+  IMAGE
+  VIDEO
+}
+enum ReportStatus {
+  OPEN
+  ACTIONED
+  DISMISSED
+}
+enum ReportTarget {
+  POST
+  COMMENT
+  USER
+  TEAM
+}
+enum NotificationType {
+  FOLLOW
+  LIKE
+  COMMENT
+  REPLY
+  MENTION
+  RESULT_APPROVED
+  REGISTRATION_UPDATE
+  MATCH_SCHEDULED
+}
+
+model User {
+  id           String         @id @default(uuid()) @db.Char(36)
+  email        String         @unique
+  username     String         @unique
+  passwordHash String
+  role         PlatformRole   @default(USER)
+  privacy      AccountPrivacy @default(PUBLIC)
+  isActive     Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  player          Player?
+  ownedTeams      Team[]          @relation("TeamOwner")
+  posts           Post[]
+  comments        Comment[]
+  likes           Like[]
+  bookmarks       Bookmark[]
+  following       Follow[]        @relation("Follower")
+  followers       Follow[]        @relation("Following")
+  blocking        Block[]         @relation("Blocker")
+  blockedBy       Block[]         @relation("Blocked")
+  notifications   Notification[]  @relation("NotifRecipient")
+  reportsFiled    Report[]        @relation("Reporter")
+  submittedSets   ResultSet[]     @relation("SetSubmitter")
+  approvedSets    ResultSet[]     @relation("SetApprover")
+  auditLogs       AuditLog[]
+  permissionGrants PermissionGrant[]
+  organizedTournaments Tournament[] @relation("Organizer")
+}
+
+model PermissionGrant {
+  id         String   @id @default(uuid()) @db.Char(36)
+  userId     String   @db.Char(36)
+  permission String   // e.g. "results:approve", "tournament:write"
+  scopeType  String?  // null = global, else "TOURNAMENT"
+  scopeId    String?  @db.Char(36)
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, permission, scopeType, scopeId])
+  @@index([userId])
+}
+
+model Player {
+  id        String   @id @default(uuid()) @db.Char(36)
+  userId    String?  @unique @db.Char(36)
+  ign       String   @unique
+  bio       String? @db.Text
+  createdAt DateTime @default(now())
+
+  user          User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  rosterEntries RosterEntry[]
+  matchStats    PlayerMatchResult[]
+  statSummaries PlayerStatSummary[]
+}
+
+model Team {
+  id        String   @id @default(uuid()) @db.Char(36)
+  name      String   @unique
+  tag       String   @unique @db.VarChar(6)
+  bio       String? @db.Text
+  ownerId   String   @db.Char(36)
+  createdAt DateTime @default(now())
+
+  owner         User                @relation("TeamOwner", fields: [ownerId], references: [id])
+  rosterEntries RosterEntry[]
+  registrations Registration[]
+  teamResults   TeamMatchResult[]
+  standings     StandingEntry[]
+  slots         LobbySlot[]
+}
+
+model RosterEntry {
+  id       String    @id @default(uuid()) @db.Char(36)
+  teamId   String    @db.Char(36)
+  playerId String    @db.Char(36)
+  isSub    Boolean   @default(false)
+  joinedAt DateTime  @default(now())
+  leftAt   DateTime?
+
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+  @@index([playerId])
+}
+
+model Tournament {
+  id             String           @id @default(uuid()) @db.Char(36)
+  slug           String           @unique
+  name           String
+  description    String? @db.Text
+  status         TournamentStatus @default(DRAFT)
+  squadSize      Int              @default(4)
+  maxTeams       Int
+  organizerId    String           @db.Char(36)
+  scoringConfig  Json             // validated by engine ScoringConfig schema
+  registrationOpensAt  DateTime?
+  registrationClosesAt DateTime?
+  startsAt       DateTime?
+  endsAt         DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  organizer     User                @relation("Organizer", fields: [organizerId], references: [id])
+  registrations Registration[]
+  stages        Stage[]
+  statSummaries PlayerStatSummary[]
+}
+
+model Registration {
+  id           String             @id @default(uuid()) @db.Char(36)
+  tournamentId String             @db.Char(36)
+  teamId       String             @db.Char(36)
+  status       RegistrationStatus @default(PENDING)
+  reviewNote   String? @db.Text
+  createdAt    DateTime           @default(now())
+  reviewedAt   DateTime?
+
+  tournament Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  team       Team       @relation(fields: [teamId], references: [id])
+
+  @@unique([tournamentId, teamId])
+}
+
+model Stage {
+  id           String    @id @default(uuid()) @db.Char(36)
+  tournamentId String    @db.Char(36)
+  name         String
+  type         StageType
+  orderIndex   Int
+  advancingTeams Int?
+  createdAt    DateTime  @default(now())
+
+  tournament Tournament       @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  groups     StageGroup[]
+  matches    Match[]
+  standings  StandingEntry[]
+
+  @@unique([tournamentId, orderIndex])
+}
+
+model StageGroup {
+  id      String @id @default(uuid()) @db.Char(36)
+  stageId String @db.Char(36)
+  name    String
+
+  stage     Stage           @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  slots     LobbySlot[]
+  matches   Match[]
+  standings StandingEntry[]
+
+  @@unique([stageId, name])
+}
+
+model Match {
+  id          String      @id @default(uuid()) @db.Char(36)
+  stageId     String      @db.Char(36)
+  groupId     String      @db.Char(36)
+  matchNumber Int
+  mapName     String
+  scheduledAt DateTime
+  status      MatchStatus @default(SCHEDULED)
+
+  stage      Stage       @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  group      StageGroup  @relation(fields: [groupId], references: [id])
+  slots      LobbySlot[]
+  resultSets ResultSet[]
+
+  @@unique([stageId, groupId, matchNumber])
+  @@index([scheduledAt])
+}
+
+// Lobby assignment: which teams play which match (and group membership)
+model LobbySlot {
+  id        String  @id @default(uuid()) @db.Char(36)
+  matchId   String? @db.Char(36)
+  groupId   String? @db.Char(36)
+  teamId    String  @db.Char(36)
+  slotNumber Int?
+
+  match Match?       @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  group StageGroup?  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  team  Team         @relation(fields: [teamId], references: [id])
+
+  @@unique([matchId, teamId])
+  @@unique([groupId, teamId])
+}
+
+// One versioned submission of results for a match. Only APPROVED sets feed standings.
+model ResultSet {
+  id            String       @id @default(uuid()) @db.Char(36)
+  matchId       String       @db.Char(36)
+  version       Int
+  status        ResultStatus @default(DRAFT)
+  source        ResultSource @default(MANUAL)
+  note          String? @db.Text
+  scoringSnapshot Json?      // scoring config used at approval time
+  submittedById String       @db.Char(36)
+  approvedById  String?      @db.Char(36)
+  createdAt     DateTime     @default(now())
+  approvedAt    DateTime?
+  /// DB-generated (see prisma/constraints.sql): equals matchId only while APPROVED. Never write this field.
+  approvedMatchId String? @unique @db.Char(36)
+
+  match       Match               @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  submittedBy User                @relation("SetSubmitter", fields: [submittedById], references: [id])
+  approvedBy  User?               @relation("SetApprover", fields: [approvedById], references: [id])
+  teamResults TeamMatchResult[]
+  playerResults PlayerMatchResult[]
+
+  @@unique([matchId, version])
+  @@index([matchId, status])
+}
+
+model TeamMatchResult {
+  id           String @id @default(uuid()) @db.Char(36)
+  resultSetId  String @db.Char(36)
+  teamId       String @db.Char(36)
+  placement    Int
+  eliminations Int
+  placementPoints Int?  // filled at approval
+  totalPoints     Int?  // filled at approval
+
+  resultSet ResultSet @relation(fields: [resultSetId], references: [id], onDelete: Cascade)
+  team      Team      @relation(fields: [teamId], references: [id])
+
+  @@unique([resultSetId, teamId])
+  @@unique([resultSetId, placement])
+}
+
+model PlayerMatchResult {
+  id             String @id @default(uuid()) @db.Char(36)
+  resultSetId    String @db.Char(36)
+  playerId       String @db.Char(36)
+  teamId         String @db.Char(36)
+  eliminations   Int
+  assists        Int?
+  damage         Int?
+  survivalSeconds Int?
+
+  resultSet ResultSet @relation(fields: [resultSetId], references: [id], onDelete: Cascade)
+  player    Player    @relation(fields: [playerId], references: [id])
+
+  @@unique([resultSetId, playerId])
+}
+
+// Derived tables: always rebuilt from approved ResultSets, never edited by hand.
+model StandingEntry {
+  id            String  @id @default(uuid()) @db.Char(36)
+  stageId       String  @db.Char(36)
+  groupId       String  @db.Char(36)
+  teamId        String  @db.Char(36)
+  rank          Int
+  matchesPlayed Int
+  totalPoints   Int
+  placementPoints Int
+  eliminations  Int
+  wins          Int
+  avgPlacement  Float
+  lastMatchPlacement Int?
+  updatedAt     DateTime @updatedAt
+
+  stage Stage       @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  group StageGroup  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  team  Team        @relation(fields: [teamId], references: [id])
+
+  @@unique([stageId, groupId, teamId])
+  @@index([stageId, rank])
+}
+
+model PlayerStatSummary {
+  id           String @id @default(uuid()) @db.Char(36)
+  tournamentId String @db.Char(36)
+  playerId     String @db.Char(36)
+  matches      Int
+  eliminations Int
+  assists      Int?
+  matchesWithAssists   Int @default(0)
+  damage       Int?
+  matchesWithDamage    Int @default(0)
+  survivalSeconds Int?
+  matchesWithSurvival  Int @default(0)
+  avgPlacement Float
+
+  tournament Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  player     Player     @relation(fields: [playerId], references: [id])
+
+  @@unique([tournamentId, playerId])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Char(36)
+  actorId    String?  @db.Char(36)
+  action     String
+  entityType String
+  entityId   String
+  before     Json?
+  after      Json?
+  reason     String? @db.Text
+  createdAt  DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
+
+// ---------- Social ----------
+model Post {
+  id         String         @id @default(uuid()) @db.Char(36)
+  authorId   String         @db.Char(36)
+  body       String @db.Text
+  visibility PostVisibility @default(PUBLIC)
+  matchId    String?        @db.Char(36)
+  isHidden   Boolean        @default(false)
+  createdAt  DateTime       @default(now())
+
+  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  media     Media[]
+  comments  Comment[]
+  likes     Like[]
+  bookmarks Bookmark[]
+  hashtags  PostHashtag[]
+
+  @@index([authorId, createdAt])
+  @@index([createdAt])
+}
+
+model Media {
+  id         String    @id @default(uuid()) @db.Char(36)
+  postId     String    @db.Char(36)
+  kind       MediaKind
+  storageKey String
+  mimeType   String
+  sizeBytes  Int
+  post       Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String   @id @default(uuid()) @db.Char(36)
+  postId    String   @db.Char(36)
+  authorId  String   @db.Char(36)
+  parentId  String?  @db.Char(36)
+  body      String @db.Text
+  isHidden  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  post    Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author  User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("Replies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("Replies")
+  likes   Like[]
+
+  @@index([postId, createdAt])
+}
+
+model Like {
+  id        String   @id @default(uuid()) @db.Char(36)
+  userId    String   @db.Char(36)
+  postId    String?  @db.Char(36)
+  commentId String?  @db.Char(36)
+  createdAt DateTime @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post    Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+}
+
+model Bookmark {
+  userId    String   @db.Char(36)
+  postId    String   @db.Char(36)
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId])
+}
+
+model Follow {
+  followerId  String   @db.Char(36)
+  followingId String   @db.Char(36)
+  createdAt   DateTime @default(now())
+  follower    User     @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+}
+
+model Block {
+  blockerId String   @db.Char(36)
+  blockedId String   @db.Char(36)
+  createdAt DateTime @default(now())
+  blocker   User     @relation("Blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   User     @relation("Blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  @@id([blockerId, blockedId])
+}
+
+model Hashtag {
+  id    String        @id @default(uuid()) @db.Char(36)
+  tag   String        @unique
+  posts PostHashtag[]
+}
+
+model PostHashtag {
+  postId    String @db.Char(36)
+  hashtagId String @db.Char(36)
+  post    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  hashtag Hashtag @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, hashtagId])
+}
+
+model Notification {
+  id          String           @id @default(uuid()) @db.Char(36)
+  recipientId String           @db.Char(36)
+  type        NotificationType
+  payload     Json
+  readAt      DateTime?
+  createdAt   DateTime         @default(now())
+  recipient   User             @relation("NotifRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+
+  @@index([recipientId, createdAt])
+}
+
+model Report {
+  id           String       @id @default(uuid()) @db.Char(36)
+  reporterId   String       @db.Char(36)
+  targetType   ReportTarget
+  targetId     String
+  reason       String @db.Text
+  status       ReportStatus @default(OPEN)
+  resolution   String? @db.Text
+  createdAt    DateTime     @default(now())
+  resolvedAt   DateTime?
+  reporter     User         @relation("Reporter", fields: [reporterId], references: [id])
+
+  @@index([status, createdAt])
+}
