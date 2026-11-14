@@ -531,3 +531,28 @@ model Report {
 
   @@index([status, createdAt])
 }
+
+// Read-only archive of real, published results. Never touched by the approval engine.
+model ArchivedStanding {
+  id              String   @id @default(uuid()) @db.Char(36)
+  tournamentKey   String
+  tournamentName  String
+  organiser       String?
+  tournamentDates String?
+  stageName       String
+  stageOrder      Int
+  rank            Int
+  teamName        String
+  matchesPlayed   Int
+  wins            Int?
+  positionPoints  Int?
+  finishPoints    Int?
+  totalPoints     Int
+  qualified       String?
+  sourceUrls      Json
+  note            String?  @db.Text
+  createdAt       DateTime @default(now())
+
+  @@unique([tournamentKey, stageName, rank])
+  @@index([tournamentKey, stageOrder])
+}

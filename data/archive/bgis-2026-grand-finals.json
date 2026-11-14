@@ -1,0 +1,213 @@
+{
+  "_note": "Compiled from public sources. Unofficial archive. Not affiliated with Krafton. Values not published are null, never estimated.",
+  "tournament": {
+    "name": "BGIS 2026 (Battlegrounds Mobile India Series)",
+    "organiser": "Krafton India",
+    "dates": "2026-01-08 to 2026-03-29",
+    "champion": "iQOO Soul"
+  },
+  "stage": {
+    "name": "Grand Finals",
+    "venue": "Chennai",
+    "matches": 18,
+    "teams": 16,
+    "ended": "2026-03-29"
+  },
+  "sources": [
+    "https://fossbytes.com/bgis-grand-finals-2026-standings-after-day-3-soul-wins-the-championship/",
+    "https://www.insidesport.in/?p=1207828",
+    "https://community.iqoo.com/in/thread/148891"
+  ],
+  "checks": [
+    "position + finish = total for all 16 rows",
+    "wins sum to 18 = number of matches",
+    "no tied totals",
+    "top 3 and 4th/5th order match two other sources"
+  ],
+  "standings": [
+    {
+      "rank": 1,
+      "team": "iQOO Soul",
+      "tag_unverified": "SOUL",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 54,
+      "finish_points": 119,
+      "total_points": 173,
+      "avg_placement": null
+    },
+    {
+      "rank": 2,
+      "team": "Genesis Esports",
+      "tag_unverified": "GENS",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 49,
+      "finish_points": 120,
+      "total_points": 169,
+      "avg_placement": null
+    },
+    {
+      "rank": 3,
+      "team": "iQOO Orangutan",
+      "tag_unverified": "OG",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 40,
+      "finish_points": 92,
+      "total_points": 132,
+      "avg_placement": null
+    },
+    {
+      "rank": 4,
+      "team": "Victores Sumus",
+      "tag_unverified": "VS",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 49,
+      "finish_points": 79,
+      "total_points": 128,
+      "avg_placement": null
+    },
+    {
+      "rank": 5,
+      "team": "Hero Xtreme GodLike",
+      "tag_unverified": "GODL",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 28,
+      "finish_points": 90,
+      "total_points": 118,
+      "avg_placement": null
+    },
+    {
+      "rank": 6,
+      "team": "K9 Esports",
+      "tag_unverified": "K9",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 41,
+      "finish_points": 76,
+      "total_points": 117,
+      "avg_placement": null
+    },
+    {
+      "rank": 7,
+      "team": "iQOO Revenant Xspark",
+      "tag_unverified": "RNTX",
+      "matches": 18,
+      "wins": 0,
+      "position_points": 30,
+      "finish_points": 84,
+      "total_points": 114,
+      "avg_placement": null
+    },
+    {
+      "rank": 8,
+      "team": "Wyld Fangs",
+      "tag_unverified": "WF",
+      "matches": 18,
+      "wins": 2,
+      "position_points": 48,
+      "finish_points": 64,
+      "total_points": 112,
+      "avg_placement": null
+    },
+    {
+      "rank": 9,
+      "team": "Vasista Esports",
+      "tag_unverified": "VE",
+      "matches": 18,
+      "wins": 1,
+      "position_points": 35,
+      "finish_points": 68,
+      "total_points": 103,
+      "avg_placement": null
+    },
+    {
+      "rank": 10,
+      "team": "Nebula Esports",
+      "tag_unverified": "NBE",
+      "matches": 18,
+      "wins": 1,
+      "position_points": 40,
+      "finish_points": 60,
+      "total_points": 100,
+      "avg_placement": null
+    },
+    {
+      "rank": 11,
+      "team": "Learn From Past",
+      "tag_unverified": "LEFP",
+      "matches": 18,
+      "wins": 0,
+      "position_points": 38,
+      "finish_points": 59,
+      "total_points": 97,
+      "avg_placement": null
+    },
+    {
+      "rank": 12,
+      "team": "Meta Ninza",
+      "tag_unverified": "NINZ",
+      "matches": 18,
+      "wins": 1,
+      "position_points": 31,
+      "finish_points": 64,
+      "total_points": 95,
+      "avg_placement": null
+    },
+    {
+      "rank": 13,
+      "team": "Myth Official",
+      "tag_unverified": "MYTH",
+      "matches": 18,
+      "wins": 0,
+      "position_points": 27,
+      "finish_points": 63,
+      "total_points": 90,
+      "avg_placement": null
+    },
+    {
+      "rank": 14,
+      "team": "iQOO Reckoning Esports",
+      "tag_unverified": null,
+      "matches": 18,
+      "wins": 1,
+      "position_points": 32,
+      "finish_points": 57,
+      "total_points": 89,
+      "avg_placement": null
+    },
+    {
+      "rank": 15,
+      "team": "iQOO Team Tamilas",
+      "tag_unverified": "TT",
+      "matches": 18,
+      "wins": 0,
+      "position_points": 20,
+      "finish_points": 61,
+      "total_points": 81,
+      "avg_placement": null
+    },
+    {
+      "rank": 16,
+      "team": "Welt Esports",
+      "tag_unverified": "WELT",
+      "matches": 18,
+      "wins": 0,
+      "position_points": 14,
+      "finish_points": 48,
+      "total_points": 62,
+      "avg_placement": null
+    }
+  ],
+  "not_yet_collected": [
+    "The Grind (group stage)",
+    "Semifinals",
+    "Survival",
+    "BMPS 2026",
+    "BMSD 2026",
+    "BMIC 2026 Season 2"
+  ]
+}

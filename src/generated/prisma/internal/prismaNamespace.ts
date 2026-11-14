@@ -424,7 +424,8 @@ export const ModelName = {
   Hashtag: 'Hashtag',
   PostHashtag: 'PostHashtag',
   Notification: 'Notification',
-  Report: 'Report'
+  Report: 'Report',
+  ArchivedStanding: 'ArchivedStanding'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -440,7 +441,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "permissionGrant" | "player" | "team" | "rosterEntry" | "tournament" | "registration" | "stage" | "stageGroup" | "match" | "lobbySlot" | "resultSet" | "teamMatchResult" | "playerMatchResult" | "standingEntry" | "playerStatSummary" | "auditLog" | "post" | "media" | "comment" | "like" | "bookmark" | "follow" | "block" | "hashtag" | "postHashtag" | "notification" | "report"
+    modelProps: "user" | "permissionGrant" | "player" | "team" | "rosterEntry" | "tournament" | "registration" | "stage" | "stageGroup" | "match" | "lobbySlot" | "resultSet" | "teamMatchResult" | "playerMatchResult" | "standingEntry" | "playerStatSummary" | "auditLog" | "post" | "media" | "comment" | "like" | "bookmark" | "follow" | "block" | "hashtag" | "postHashtag" | "notification" | "report" | "archivedStanding"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2292,6 +2293,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ArchivedStanding: {
+      payload: Prisma.$ArchivedStandingPayload<ExtArgs>
+      fields: Prisma.ArchivedStandingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ArchivedStandingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ArchivedStandingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>
+        }
+        findFirst: {
+          args: Prisma.ArchivedStandingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ArchivedStandingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>
+        }
+        findMany: {
+          args: Prisma.ArchivedStandingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>[]
+        }
+        create: {
+          args: Prisma.ArchivedStandingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>
+        }
+        createMany: {
+          args: Prisma.ArchivedStandingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ArchivedStandingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>
+        }
+        update: {
+          args: Prisma.ArchivedStandingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>
+        }
+        deleteMany: {
+          args: Prisma.ArchivedStandingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ArchivedStandingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ArchivedStandingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArchivedStandingPayload>
+        }
+        aggregate: {
+          args: Prisma.ArchivedStandingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateArchivedStanding>
+        }
+        groupBy: {
+          args: Prisma.ArchivedStandingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArchivedStandingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ArchivedStandingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArchivedStandingCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2689,6 +2756,30 @@ export const ReportScalarFieldEnum = {
 export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
+export const ArchivedStandingScalarFieldEnum = {
+  id: 'id',
+  tournamentKey: 'tournamentKey',
+  tournamentName: 'tournamentName',
+  organiser: 'organiser',
+  tournamentDates: 'tournamentDates',
+  stageName: 'stageName',
+  stageOrder: 'stageOrder',
+  rank: 'rank',
+  teamName: 'teamName',
+  matchesPlayed: 'matchesPlayed',
+  wins: 'wins',
+  positionPoints: 'positionPoints',
+  finishPoints: 'finishPoints',
+  totalPoints: 'totalPoints',
+  qualified: 'qualified',
+  sourceUrls: 'sourceUrls',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type ArchivedStandingScalarFieldEnum = (typeof ArchivedStandingScalarFieldEnum)[keyof typeof ArchivedStandingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3007,6 +3098,21 @@ export const ReportOrderByRelevanceFieldEnum = {
 } as const
 
 export type ReportOrderByRelevanceFieldEnum = (typeof ReportOrderByRelevanceFieldEnum)[keyof typeof ReportOrderByRelevanceFieldEnum]
+
+
+export const ArchivedStandingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tournamentKey: 'tournamentKey',
+  tournamentName: 'tournamentName',
+  organiser: 'organiser',
+  tournamentDates: 'tournamentDates',
+  stageName: 'stageName',
+  teamName: 'teamName',
+  qualified: 'qualified',
+  note: 'note'
+} as const
+
+export type ArchivedStandingOrderByRelevanceFieldEnum = (typeof ArchivedStandingOrderByRelevanceFieldEnum)[keyof typeof ArchivedStandingOrderByRelevanceFieldEnum]
 
 
 
@@ -3333,6 +3439,7 @@ export type GlobalOmitConfig = {
   postHashtag?: Prisma.PostHashtagOmit
   notification?: Prisma.NotificationOmit
   report?: Prisma.ReportOmit
+  archivedStanding?: Prisma.ArchivedStandingOmit
 }
 
 /* Types for Logging */

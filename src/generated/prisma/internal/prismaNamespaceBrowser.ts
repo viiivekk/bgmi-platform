@@ -78,7 +78,8 @@ export const ModelName = {
   Hashtag: 'Hashtag',
   PostHashtag: 'PostHashtag',
   Notification: 'Notification',
-  Report: 'Report'
+  Report: 'Report',
+  ArchivedStanding: 'ArchivedStanding'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -455,6 +456,30 @@ export const ReportScalarFieldEnum = {
 export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
+export const ArchivedStandingScalarFieldEnum = {
+  id: 'id',
+  tournamentKey: 'tournamentKey',
+  tournamentName: 'tournamentName',
+  organiser: 'organiser',
+  tournamentDates: 'tournamentDates',
+  stageName: 'stageName',
+  stageOrder: 'stageOrder',
+  rank: 'rank',
+  teamName: 'teamName',
+  matchesPlayed: 'matchesPlayed',
+  wins: 'wins',
+  positionPoints: 'positionPoints',
+  finishPoints: 'finishPoints',
+  totalPoints: 'totalPoints',
+  qualified: 'qualified',
+  sourceUrls: 'sourceUrls',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type ArchivedStandingScalarFieldEnum = (typeof ArchivedStandingScalarFieldEnum)[keyof typeof ArchivedStandingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -773,4 +798,19 @@ export const ReportOrderByRelevanceFieldEnum = {
 } as const
 
 export type ReportOrderByRelevanceFieldEnum = (typeof ReportOrderByRelevanceFieldEnum)[keyof typeof ReportOrderByRelevanceFieldEnum]
+
+
+export const ArchivedStandingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tournamentKey: 'tournamentKey',
+  tournamentName: 'tournamentName',
+  organiser: 'organiser',
+  tournamentDates: 'tournamentDates',
+  stageName: 'stageName',
+  teamName: 'teamName',
+  qualified: 'qualified',
+  note: 'note'
+} as const
+
+export type ArchivedStandingOrderByRelevanceFieldEnum = (typeof ArchivedStandingOrderByRelevanceFieldEnum)[keyof typeof ArchivedStandingOrderByRelevanceFieldEnum]
 

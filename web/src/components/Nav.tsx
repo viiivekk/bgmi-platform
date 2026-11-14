@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Trophy } from "lucide-react";
 
-const links = [{ href: "/", text: "Home" }, { href: "/tournaments/", text: "Tournaments" }];
+const links = [{ href: "/", text: "Home" }, { href: "/tournaments/", text: "Tournaments" }, { href: "/archive/", text: "Archive" }];
 export function Nav() {
   const path = usePathname();
   return (

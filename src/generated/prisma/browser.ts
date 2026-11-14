@@ -157,3 +157,8 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type Report = Prisma.ReportModel
+/**
+ * Model ArchivedStanding
+ * 
+ */
+export type ArchivedStanding = Prisma.ArchivedStandingModel

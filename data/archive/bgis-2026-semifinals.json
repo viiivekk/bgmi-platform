@@ -1,0 +1,265 @@
+{
+  "_note": "Compiled from public sources. Unofficial archive. Not affiliated with Krafton. Only total points are published here; wins, position and finish splits are null, never estimated.",
+  "tournament": "BGIS 2026",
+  "stage": {
+    "name": "Semifinals",
+    "dates": "2026-03-12 to 2026-03-15",
+    "teams": 24,
+    "matches_per_team": 16,
+    "matches_total": 24,
+    "format": "Double round robin across 3 groups. Top 8 to Grand Finals; ranks 9-24 to Survival stage"
+  },
+  "sources": [
+    "https://sportsdigest.in/bgis-2026-semi-final-day-4-points-table/184646/amp/",
+    "https://community.iqoo.com/in/thread/145647",
+    "https://www.heraldgoa.in/?p=468135"
+  ],
+  "checks": [
+    "24 teams, totals sorted high to low",
+    "ranks 1-3, 17, 19, 23, 24 match a second source",
+    "all 16 Grand Finalists appear in this table; top 8 here are exactly the direct qualifiers"
+  ],
+  "ties_note": "Victores Sumus and Meta Ninza (112), Vasista Esports and NONx Esports (108) tie on total; order shown is as published, tiebreak rule not verified.",
+  "standings": [
+    {
+      "rank": 1,
+      "team": "iQOO Soul",
+      "matches": 16,
+      "total_points": 172,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 2,
+      "team": "iQOO Orangutan",
+      "matches": 16,
+      "total_points": 150,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 3,
+      "team": "Genesis Esports",
+      "matches": 16,
+      "total_points": 143,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 4,
+      "team": "Learn From Past",
+      "matches": 16,
+      "total_points": 137,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 5,
+      "team": "iQOO Reckoning Esports",
+      "matches": 16,
+      "total_points": 129,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 6,
+      "team": "iQOO Revenant Xspark",
+      "matches": 16,
+      "total_points": 116,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 7,
+      "team": "Victores Sumus",
+      "matches": 16,
+      "total_points": 112,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 8,
+      "team": "Meta Ninza",
+      "matches": 16,
+      "total_points": 112,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Grand Finals"
+    },
+    {
+      "rank": 9,
+      "team": "Vasista Esports",
+      "matches": 16,
+      "total_points": 108,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 10,
+      "team": "NONx Esports",
+      "matches": 16,
+      "total_points": 108,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 11,
+      "team": "Hero Xtreme GodLike",
+      "matches": 16,
+      "total_points": 105,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 12,
+      "team": "Troy Tamilan Esports",
+      "matches": 16,
+      "total_points": 104,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 13,
+      "team": "Myth Official",
+      "matches": 16,
+      "total_points": 103,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 14,
+      "team": "EvoX Esports",
+      "matches": 16,
+      "total_points": 101,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 15,
+      "team": "Nebula Esports",
+      "matches": 16,
+      "total_points": 89,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 16,
+      "team": "iQOO Team Tamilas",
+      "matches": 16,
+      "total_points": 88,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 17,
+      "team": "Wyld Fangs",
+      "matches": 16,
+      "total_points": 86,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 18,
+      "team": "Team Vanguard",
+      "matches": 16,
+      "total_points": 84,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 19,
+      "team": "Phoenix Esports",
+      "matches": 16,
+      "total_points": 77,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 20,
+      "team": "Sinewy Esports",
+      "matches": 16,
+      "total_points": 67,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 21,
+      "team": "K9 Esports",
+      "matches": 16,
+      "total_points": 65,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 22,
+      "team": "Welt Esports",
+      "matches": 16,
+      "total_points": 61,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 23,
+      "team": "Madkings",
+      "matches": 16,
+      "total_points": 60,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    },
+    {
+      "rank": 24,
+      "team": "4 Wolf x DOD",
+      "matches": 16,
+      "total_points": 42,
+      "wins": null,
+      "position_points": null,
+      "finish_points": null,
+      "qualified": "Survival stage"
+    }
+  ]
+}
