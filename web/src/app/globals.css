@@ -1,0 +1,4 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+body { @apply bg-bg text-slate-100 antialiased; }
+a:focus-visible, button:focus-visible, input:focus-visible { @apply outline outline-2 outline-offset-2 outline-blue; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
